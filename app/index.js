@@ -1,7 +1,9 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
+import {Button, StyleSheet, Text, View} from "react-native";
+import {useRouter} from "expo-router";
 
-export default function App() {
+export default function Page() {
+    const router = useRouter();
     return (
         <SafeAreaProvider>
             <SafeAreaView style={{flex: 1}}>
@@ -10,8 +12,8 @@ export default function App() {
                 </View>
                 <View style={styles.buttonsContainer}>
                     <View style={{gap: 30, width: 170}}>
-                        <Button style={styles.button} title={"Sign up"}/>
-                        <Button style={styles.button} title={"Login"}/>
+                        <Button title={"Sign up"}/>
+                        <Button style={styles.button} title={"Login"} onPress={() => router.push("/login")}/>
                     </View>
                 </View>
 
