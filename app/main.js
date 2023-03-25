@@ -24,20 +24,20 @@ function MainView() {
     console.log(theme);
     return (
         <Tab.Navigator screenOptions={{headerShown: false, tabBarActiveTintColor: theme}}>
-            <Tab.Screen name="Browse" component={Browse} options={{tabBarIcon: () => {
-                    return <MaterialCommunityIcons name="view-gallery" size={24} color={theme} />
+            <Tab.Screen name="Browse" component={Browse} options={{tabBarIcon: ({focused}) => {
+                    return <MaterialCommunityIcons name="view-gallery" size={24} color={focused ? theme : "#998f91"} />
             }
             }}/>
-            <Tab.Screen name="Profile" component={Browse} options={{tabBarIcon: () => {
-                    return <MaterialCommunityIcons name="face-man-profile" size={24} color={theme} />
+            <Tab.Screen name="Profile" component={Browse} options={{tabBarIcon: ({focused}) => {
+                    return <MaterialCommunityIcons name="face-man-profile" size={24} color={focused ? theme : "#998f91"} />
                 }
             }}/>
-            <Tab.Screen name="Upload" component={Browse} options={{tabBarIcon: () => {
-                    return <MaterialCommunityIcons name="cloud-upload" size={24} color={theme} />
+            <Tab.Screen name="Upload" component={Browse} options={{tabBarIcon: ({focused}) => {
+                    return <MaterialCommunityIcons name="cloud-upload" size={24} color={focused ? theme : "#998f91"} />
                 }
             }}/>
-            <Tab.Screen name="Settings" component={Settings} options={{tabBarIcon: () => {
-                    return <MaterialCommunityIcons name="card-bulleted-settings" size={24} color={theme} />
+            <Tab.Screen name="Settings" component={Settings} options={{tabBarIcon: ({focused}) => {
+                    return <MaterialCommunityIcons name="card-bulleted-settings" size={24} color={focused ? theme : "#998f91"} />
                 }
             }}/>
         </Tab.Navigator>
