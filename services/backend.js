@@ -1,4 +1,11 @@
-export const backend_url = "http://localhost:8000";
+import {Platform} from "react-native";
+
+export let backend_url;
+if (__DEV__) {
+    if (Platform.OS === "web") backend_url = "http://localhost:8000";
+    else backend_url = "https://backend.figure.novakovic.be";
+}
+else backend_url = "https://backend.figure.novakovic.be";
 
 /**
  * Object to interact with the backend.
