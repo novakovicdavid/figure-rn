@@ -1,6 +1,7 @@
-import {FlatList, View, Image, StyleSheet} from "react-native";
+import {FlatList, View, Text} from "react-native";
 import {useEffect, useState} from "react";
 import {backend} from "../services/backend";
+import FitImage from 'react-native-fit-image';
 
 export default function Browse() {
     const [figures, setFigures] = useState([]);
@@ -13,17 +14,14 @@ export default function Browse() {
 
     return (
         <FlatList data={figures} renderItem={(item) =>
-            <View>
-                <Image source={{uri: item.item.url}} style={styles.tinyLogo}/>
+            <View style={{flex: 1, width: "100%"}}>
+                <FitImage source={{uri: item.item.url}}/>
+                <Text>{item.item.title}</Text>
             </View>
-        } onEndReached={() => {
+        } onEndReached={async () => {
+            const newFigures = await backend.get_figures_after_id(figures[figures.length - 1].id);
+            if (newFigures.figures && newFigures.figures.length > 0) setFigures([...figures, ...newFigures.figures]);
         }
         } contentContainerStyle={{alignItems: "stretch"}}/>
     )
 }
-
-const styles = StyleSheet.create({
-    tinyLogo: {
-
-    }
-});
