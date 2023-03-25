@@ -3,6 +3,7 @@ import Browse from "./browse";
 import Settings from "./settings";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import {ThemeProvider, useThemeContext} from "../contexts/themeContext";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,10 +24,22 @@ function MainView() {
     console.log(theme);
     return (
         <Tab.Navigator screenOptions={{headerShown: false, tabBarActiveTintColor: theme}}>
-            <Tab.Screen name="Browse" component={Browse}/>
-            <Tab.Screen name="Profile" component={Browse}/>
-            <Tab.Screen name="Upload" component={Browse}/>
-            <Tab.Screen name="Settings" component={Settings}/>
+            <Tab.Screen name="Browse" component={Browse} options={{tabBarIcon: () => {
+                    return <MaterialCommunityIcons name="view-gallery" size={24} color={theme} />
+            }
+            }}/>
+            <Tab.Screen name="Profile" component={Browse} options={{tabBarIcon: () => {
+                    return <MaterialCommunityIcons name="face-man-profile" size={24} color={theme} />
+                }
+            }}/>
+            <Tab.Screen name="Upload" component={Browse} options={{tabBarIcon: () => {
+                    return <MaterialCommunityIcons name="cloud-upload" size={24} color={theme} />
+                }
+            }}/>
+            <Tab.Screen name="Settings" component={Settings} options={{tabBarIcon: () => {
+                    return <MaterialCommunityIcons name="card-bulleted-settings" size={24} color={theme} />
+                }
+            }}/>
         </Tab.Navigator>
     )
 }
