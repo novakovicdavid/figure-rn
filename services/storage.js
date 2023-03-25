@@ -25,6 +25,12 @@ export const storage = {
             localStorage.removeItem(key)
         }
         else await SecureStore.deleteItemAsync(key);
+    },
+    async saveTheme(theme) {
+        await this.save("theme", JSON.stringify(theme));
+    },
+    async loadTheme() {
+        return JSON.parse(await this.getValueFor("theme"));
     }
 }
 

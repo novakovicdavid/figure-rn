@@ -3,15 +3,37 @@ import {useState} from "react";
 import {backend} from "../services/backend";
 import {storage} from "../services/storage";
 import {useRouter} from "expo-router";
+import ColorPicker from 'react-native-wheel-color-picker';
+import {useThemeContext} from "../contexts/themeContext";
 
 export default function Settings() {
     const [showModal, setShowModal] = useState(false);
+    const {theme, saveTheme} = useThemeContext();
 
     return (
         <>
             <View style={{flex: 1}}>
+                <View style={{justifyContent: "center"}}>
+                    <Text style={{marginTop: 40, marginBottom: 20, textAlign: 'center', fontSize: 30}}>Theme:</Text>
+                </View>
+                <ColorPicker
+                    style={{marginLeft: 50, marginRight: 50, paddingBottom: 50}}
+                    color={"#000000"}
+                    swatchesOnly={true}
+                    onColorChange={(color) => {
+                        saveTheme(color);
+                    }
+                    }
+                    thumbSize={40}
+                    sliderSize={40}
+                    noSnap={true}
+                    row={false}
+                    swatchesLast={false}
+                    swatches={true}
+                    discrete={false}
+                />
                 <View style={styles.logout_button}>
-                    <Button title={"Logout"} onPress={() => {
+                    <Button title={"Logout"} color={theme} onPress={() => {
                         setShowModal(true);
                     }
                     }/>
