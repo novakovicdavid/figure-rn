@@ -1,4 +1,4 @@
-export const backend_url = process.env.REACT_APP_BACKEND_URL;
+export const backend_url = "http://localhost:8000";
 
 /**
  * Object to interact with the backend.
