@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     modal_message_content: {
+        textAlign: "center",
         fontSize: 20
     },
     modal_button_container: {
