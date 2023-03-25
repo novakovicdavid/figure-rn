@@ -19,6 +19,12 @@ export const storage = {
     },
     async loadProfile() {
         return JSON.parse(await this.getValueFor("profile"));
+    },
+    async deleteKey(key) {
+        if (Platform.OS === "web") {
+            localStorage.removeItem(key)
+        }
+        else await SecureStore.deleteItemAsync(key);
     }
 }
 
