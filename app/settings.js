@@ -63,6 +63,7 @@ function LogoutModal(props) {
                             <TouchableOpacity onPress={async () => {
                                 await backend.invalidateSession();
                                 await storage.deleteKey("profile");
+                                await storage.deleteKey("theme");
                                 router.replace("/")
                             }
                             } style={{...styles.modal_button, ...styles.modal_confirm_button}}><Text>Logout</Text></TouchableOpacity>
