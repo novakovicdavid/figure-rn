@@ -1,4 +1,4 @@
-import {View, Button, Text, StyleSheet, TextInput} from "react-native";
+import {View, Button, Text, StyleSheet, TextInput, ScrollView} from "react-native";
 import {backend} from "../services/backend";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import {useRouter} from "expo-router";
@@ -26,56 +26,58 @@ export default function Login() {
     return (
         <SafeAreaProvider>
             <SafeAreaView style={{flex: 1}}>
-                <View style={styles.titleContainer}>
-                    <Text adjustsFontSizeToFit numberOfLines={1} style={styles.title}>Login to Figure.</Text>
-                </View>
-                <View style={styles.formContainer}>
-                    <Controller
-                        control={control}
-                        rules={{
-                            required: true,
-                        }}
-                        render={({field: {onChange, onBlur, value}}) => (
-                            <>
-                                <Text style={styles.formLabel}>Email:</Text>
-                                <TextInput
-                                    style={styles.formInput}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    placeholder={"john@doe.com"}
-                                />
-                            </>
-                        )}
-                        name="email"
-                    />
-                    {errors.email && <Text style={styles.error}>Please enter your email.</Text>}
+                    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+                        <View style={styles.titleContainer}>
+                            <Text adjustsFontSizeToFit numberOfLines={1} style={styles.title}>Login to Figure.</Text>
+                        </View>
+                        <View style={styles.formContainer}>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: true,
+                                }}
+                                render={({field: {onChange, onBlur, value}}) => (
+                                    <>
+                                        <Text style={styles.formLabel}>Email:</Text>
+                                        <TextInput
+                                            style={styles.formInput}
+                                            onBlur={onBlur}
+                                            onChangeText={onChange}
+                                            value={value}
+                                            placeholder={"john@doe.com"}
+                                        />
+                                    </>
+                                )}
+                                name="email"
+                            />
+                            {errors.email && <Text style={styles.error}>Please enter your email.</Text>}
 
-                    <Controller
-                        control={control}
-                        rules={{
-                            required: true,
-                        }}
-                        render={({field: {onChange, onBlur, value}}) => (
-                            <>
-                                <Text style={styles.formLabel}>Password:</Text>
-                                <TextInput
-                                    style={styles.formInput}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    placeholder={"Password"}
-                                    secureTextEntry={true}
-                                />
-                            </>
-                        )}
-                        name="password"
-                    />
-                    {errors.password && <Text style={styles.error}>Please enter your password.</Text>}
-                    <View style={styles.submitButton}>
-                        <Button title={"Login"} onPress={handleSubmit(onSubmit)}/>
-                    </View>
-                </View>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: true,
+                                }}
+                                render={({field: {onChange, onBlur, value}}) => (
+                                    <>
+                                        <Text style={styles.formLabel}>Password:</Text>
+                                        <TextInput
+                                            style={styles.formInput}
+                                            onBlur={onBlur}
+                                            onChangeText={onChange}
+                                            value={value}
+                                            placeholder={"Password"}
+                                            secureTextEntry={true}
+                                        />
+                                    </>
+                                )}
+                                name="password"
+                            />
+                            {errors.password && <Text style={styles.error}>Please enter your password.</Text>}
+                            <View style={styles.submitButton}>
+                                <Button title={"Login"} onPress={handleSubmit(onSubmit)}/>
+                            </View>
+                        </View>
+                    </ScrollView>
             </SafeAreaView>
         </SafeAreaProvider>
     )
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
         alignContent: "center",
         // maxWidth: "30%",
         marginLeft: "5%",
-        marginRight: "5%"
+        marginRight: "5%",
     },
     button: {
         maxWidth: 90,
