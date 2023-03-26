@@ -1,22 +1,19 @@
 import {Text, View} from "react-native";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {backend} from "../../services/backend";
-import * as Linking from 'expo-linking';
 import FitImage from "react-native-fit-image";
+import {useSearchParams} from "expo-router";
 
 export default function Figure() {
-    const currentUrl = Linking.useURL();
+    const {id} = useSearchParams();
     const [figure, setFigure] = useState();
-    const gotUrl = useRef(false);
+
     useEffect(() => {
-        if (gotUrl.current || !!!currentUrl || (new URL(currentUrl.toString()).pathname.lastIndexOf("/main") === 0)) return;
-        gotUrl.current = true;
-        const url = new URL(currentUrl.toString());
-        const figureId = url.pathname.substring(url.pathname.lastIndexOf("/") + 1);
-        backend.get_figure(figureId).then((result) => {
+        if (!id) return;
+        backend.get_figure(id).then((result) => {
             if(result.figure) setFigure(result.figure);
         });
-    }, [currentUrl]);
+    }, [id]);
 
     return (
         <>
