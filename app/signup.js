@@ -29,7 +29,7 @@ export default function Signup() {
             <SafeAreaView style={{flex: 1}}>
                 <ScrollView contentContainerStyle={{flexGrow: 1}}>
                     <View style={styles.titleContainer}>
-                        <Text adjustsFontSizeToFit numberOfLines={1} style={styles.title}>Login to Figure.</Text>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={styles.title}>Sign up to Figure.</Text>
                     </View>
                     <View style={styles.formContainer}>
                         <Controller
