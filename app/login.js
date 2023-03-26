@@ -1,13 +1,18 @@
-import {View, Button, Text, StyleSheet} from "react-native";
+import {View, Button, Text, StyleSheet, TextInput} from "react-native";
 import {backend} from "../services/backend";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import {useRouter} from "expo-router";
 import {storage} from "../services/storage";
-import {useForm} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
 
 export default function Login() {
     const router = useRouter();
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const { control, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: {
+            email: '',
+            password: ''
+        }
+    });
 
     const onSubmit = data => {
         backend.login(data.email, data.password)
@@ -24,19 +29,53 @@ export default function Login() {
                 <View style={styles.titleContainer}>
                     <Text adjustsFontSizeToFit numberOfLines={1} style={styles.title}>Login to Figure.</Text>
                 </View>
-                <form onSubmit={handleSubmit(onSubmit)} style={styles.formContainer}>
-                    <input placeholder={"Email"} {...register("email", {required: true})}
-                           style={styles.formInput}/>
-                    {errors.email && <span style={styles.error}>This field is required</span>}
+                <View style={styles.formContainer}>
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            <>
+                                <Text style={styles.formLabel}>Email:</Text>
+                                <TextInput
+                                    style={styles.formInput}
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    placeholder={"john@doe.com"}
+                                />
+                            </>
+                        )}
+                        name="email"
+                    />
+                    {errors.email && <Text style={styles.error}>Please enter your email.</Text>}
 
-                    <input placeholder={"Password"} type={"password"} {...register("password", {required: true})}
-                           style={styles.formInput}/>
-                    {errors.password && <span style={styles.error}>This field is required</span>}
-
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            <>
+                                <Text style={styles.formLabel}>Password:</Text>
+                                <TextInput
+                                    style={styles.formInput}
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    placeholder={"Password"}
+                                    secureTextEntry={true}
+                                />
+                            </>
+                        )}
+                        name="password"
+                    />
+                    {errors.password && <Text style={styles.error}>Please enter your password.</Text>}
                     <View style={styles.submitButton}>
                         <Button title={"Login"} onPress={handleSubmit(onSubmit)}/>
                     </View>
-                </form>
+                </View>
             </SafeAreaView>
         </SafeAreaProvider>
     )
@@ -53,20 +92,25 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         flex: 2,
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: "30em",
-        marginLeft: "5em",
-        marginRight: "5em"
+        justifyContent: "center",
+        alignContent: "center",
+        // maxWidth: "30%",
+        marginLeft: "5%",
+        marginRight: "5%"
     },
     button: {
         maxWidth: 90,
         width: 90
         // fontSize: 30
     },
+    formLabel: {
+        fontSize: 15,
+        marginBottom: 5
+    },
     formInput: {
-        height: 30,
-        marginTop: 10,
+        height: 50,
+        marginBottom: 10,
+        paddingLeft: 10,
         borderStyle: "solid",
         borderColor: "#2196f3",
         borderWidth: 1,
@@ -77,9 +121,8 @@ const styles = StyleSheet.create({
     },
     error: {
         fontSize: 13,
-        fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
-        marginTop: 5,
-        marginBottom: 5,
+        // marginTop: 5,
+        marginBottom: 15,
         color: "red"
     }
 });
