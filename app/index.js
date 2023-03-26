@@ -30,8 +30,8 @@ export default function Page() {
                         </View>
                         <View style={styles.buttonsContainer}>
                             <View style={{gap: 30, width: 170}}>
-                                <Button title={"Sign up"}/>
-                                <Button style={styles.button} title={"Login"} onPress={() => router.push("/login")}/>
+                                <Button title={"Sign up"} onPress={() => router.push("/signup")}/>
+                                <Button title={"Login"} onPress={() => router.push("/login")}/>
                             </View>
                         </View>
                     </>
@@ -54,10 +54,5 @@ const styles = StyleSheet.create({
         flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    button: {
-        maxWidth: 90,
-        width: 90
-        // fontSize: 30
     }
 });
