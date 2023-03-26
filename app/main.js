@@ -21,7 +21,6 @@ export default function Main() {
 
 function MainView() {
     const {theme} = useThemeContext();
-    console.log(theme);
     return (
         <Tab.Navigator screenOptions={{headerShown: false, tabBarActiveTintColor: theme}}>
             <Tab.Screen name="Browse" component={Browse} options={{tabBarIcon: ({focused}) => {
