@@ -1,14 +1,16 @@
 import {Button, StyleSheet, Text, TextInput, View, ScrollView} from "react-native";
 import * as ImagePicker from 'expo-image-picker';
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import FitImage from "react-native-fit-image";
 import {Controller, useForm} from "react-hook-form";
 import {backend} from "../services/backend";
 import {useRouter} from "expo-router";
+import {useThemeContext} from "../contexts/themeContext";
 
 
 export function UploadPage() {
     const router = useRouter();
+    const {theme} = useThemeContext();
     const [imageUri, setImageUri] = useState("");
     const {control, handleSubmit, formState: {errors}} = useForm({
         defaultValues: {
@@ -16,6 +18,40 @@ export function UploadPage() {
             description: ''
         }
     });
+
+    const styles = useMemo(() => {
+        return StyleSheet.create({
+            formContainer: {
+                flex: 2,
+                justifyContent: "center",
+                alignContent: "center",
+                marginLeft: "5%",
+                marginRight: "5%",
+            },
+            formLabel: {
+                fontSize: 15,
+                marginBottom: 5
+            },
+            formInput: {
+                height: 50,
+                marginBottom: 10,
+                paddingLeft: 10,
+                borderStyle: "solid",
+                borderColor: theme,
+                borderWidth: 1,
+                borderRadius: 3
+            },
+            submitButton: {
+                marginTop: 20
+            },
+            error: {
+                fontSize: 13,
+                marginBottom: 15,
+                color: "red"
+            }
+        });
+    }, [theme])
+
     const onSubmit = async data => {
         backend.upload_figure(data.title, data.description, imageUri,)
             .then((result) => {
@@ -34,7 +70,7 @@ export function UploadPage() {
                 if (result.canceled) return;
                 setImageUri(result.assets[0].uri);
             }
-            }/>
+            } color={theme}/>
             {
                 imageUri &&
                 <>
@@ -54,6 +90,7 @@ export function UploadPage() {
                                         onChangeText={onChange}
                                         value={value}
                                         placeholder={"A title"}
+                                        selectionColor={theme}
                                     />
                                 </>
                             )}
@@ -75,6 +112,7 @@ export function UploadPage() {
                                         onChangeText={onChange}
                                         value={value}
                                         placeholder={"A description"}
+                                        selectionColor={theme}
                                     />
                                 </>
                             )}
@@ -82,7 +120,7 @@ export function UploadPage() {
                         />
                         {errors.password && <Text style={styles.error}>Please enter your password.</Text>}
                         <View style={styles.submitButton}>
-                            <Button title={"Upload"} onPress={handleSubmit(onSubmit)}/>
+                            <Button title={"Upload"} onPress={handleSubmit(onSubmit)} color={theme}/>
                         </View>
                     </View>
                 </>
@@ -91,34 +129,3 @@ export function UploadPage() {
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    formContainer: {
-        flex: 2,
-        justifyContent: "center",
-        alignContent: "center",
-        marginLeft: "5%",
-        marginRight: "5%",
-    },
-    formLabel: {
-        fontSize: 15,
-        marginBottom: 5
-    },
-    formInput: {
-        height: 50,
-        marginBottom: 10,
-        paddingLeft: 10,
-        borderStyle: "solid",
-        borderColor: "#2196f3",
-        borderWidth: 1,
-        borderRadius: 3
-    },
-    submitButton: {
-        marginTop: 20
-    },
-    error: {
-        fontSize: 13,
-        marginBottom: 15,
-        color: "red"
-    }
-});
