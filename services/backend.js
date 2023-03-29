@@ -240,7 +240,10 @@ async function upload_figure(title, description, file) {
     let formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('file', file);
+    formData.append('file', {
+        uri: file,
+        type: 'image/jpeg',
+    });
     try {
         return await fetch(backend_url + "/figures/upload", {
             method: "POST",
@@ -254,6 +257,7 @@ async function upload_figure(title, description, file) {
         });
     }
     catch (e) {
+        console.log(e);
         return {error: "network-error"}
     }
 }
