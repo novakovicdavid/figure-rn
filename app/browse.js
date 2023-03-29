@@ -25,7 +25,8 @@ export default function Browse(props) {
             }
             }>
                 <FitImage source={{uri: item.item.url}}/>
-                <Text>{item.item.title}</Text>
+                <Text style={{paddingTop: 8, paddingBottom: 8, paddingHorizontal: 16}}>{item.item.title}</Text>
+                <Text style={{paddingBottom: 32, paddingHorizontal: 16}}>By {item.item.profile.username}</Text>
             </TouchableOpacity>
         } onEndReached={async () => {
             const newFigures = await backend.get_figures_after_id(figures[figures.length - 1].id, profile?.id);
